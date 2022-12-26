@@ -15,6 +15,6 @@ def run():
         cv2.imshow('MediaPipe Hands', image)
         cv2.waitKey(FRAME_DELAY)
     cap.release()
-
+    
 
 run()
