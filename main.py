@@ -33,6 +33,8 @@ def run():
 
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR) #BGR
+        width, height, _ = image.shape
+        #print(width, height)
 
         if results.multi_hand_landmarks :
           for hand_landmarks in results.multi_hand_landmarks :
@@ -43,12 +45,21 @@ def run():
             #print(f'{index_finger_tip.x}, {index_finger_tip.y}')
             #print(hand_landmarks.landmark[mp_fingers.INDEX_FINGER_TIP])
             #print('------')
-            getAngle(
+            angle = getAngle(
               hand_landmarks.landmark[mp_fingers.WRIST],
               hand_landmarks.landmark[mp_fingers.INDEX_FINGER_TIP],
               hand_landmarks.landmark[mp_fingers.PINKY_TIP],
               hand_landmarks.landmark[mp_fingers.MIDDLE_FINGER_TIP],
               hand_landmarks.landmark[mp_fingers.RING_FINGER_TIP])
+            cv2.putText(
+              image,
+              text=f'{str(int(index_finger_tip.x * width))}, {str(int(index_finger_tip.y * height))}',
+              org=(100,200),
+              fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+              fontScale=2,
+              color=(0,0,0),
+              thickness=2
+                )
             mp_drawing.draw_landmarks(
               image,
               hand_landmarks,
@@ -78,6 +89,7 @@ def getAngle(ps, p1, p2, q1, q2) :
   #print(f'ang1, ang2, fangle : {line1}, {line2}, {angle}')
   if angle > 8 and angle < 65 and qangle > 35 and dis1 < 21.5 and dis1 > 13 :
     print('rock on')
+  return angle
   #exit()
 
 def getDist(p1,p2) :
