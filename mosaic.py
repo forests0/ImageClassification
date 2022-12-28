@@ -3,7 +3,7 @@ import cv2
 
 xml = 'haarcascades/haarcascade_frontalface_default.xml'
 face_cascade = cv2.CascadeClassifier(xml)
-WAIT_DELAY = 20
+WAIT_DELAY = 10
 cap = cv2.VideoCapture(0) 
 cap.set(3,2160) 
 cap.set(4,960) 
